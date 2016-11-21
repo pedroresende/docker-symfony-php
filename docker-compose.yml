@@ -1,0 +1,15 @@
+version: '2'
+services:
+  web:
+    build: .
+    command: php /host/symfony/bin/console server:run 0.0.0.0:8000
+    ports:
+      - "80:8000"
+    depends_on:
+      - db
+    volumes:
+      - .:/host
+  db:
+    image: orchardup/mysql
+    environment:
+      MYSQL_DATABASE: symfony
