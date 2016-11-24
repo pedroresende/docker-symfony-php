@@ -4,12 +4,16 @@ services:
     build: .
     command: php /host/symfony/bin/console server:run 0.0.0.0:8000
     ports:
-      - "80:8000"
+      - "81:8000"
     depends_on:
       - db
     volumes:
       - .:/host
   db:
-    image: orchardup/mysql
+    image: mysql/mysql-server:latest
     environment:
       MYSQL_DATABASE: symfony
+      MYSQL_ROOT_PASSWORD: symfony
+      MYSQL_ROOT_HOST: 172.18.0.1
+    ports:
+      - "3307:3306"
