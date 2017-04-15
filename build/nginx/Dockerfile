@@ -6,7 +6,7 @@ ADD sites-enabled /etc/nginx/sites-enabled
 
 RUN mkdir -p /var/log/nginx
 
-WORKDIR /cms2
+WORKDIR /symfony
 
 EXPOSE 80
 EXPOSE 443
