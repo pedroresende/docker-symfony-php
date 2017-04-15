@@ -10,7 +10,9 @@ RUN apt-get update && apt-get install -my \
   php-mcrypt \
   php-xdebug \
   php-cli \
-  php-intl
+  php-intl \
+  git \
+  zip
 
 RUN mkdir /run/php
 
