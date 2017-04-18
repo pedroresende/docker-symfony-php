@@ -7,7 +7,7 @@ services:
     links:
       - db
     volumes:
-      - ./symfony:/symfony
+      - ./symfony:/symfony:cached
       - ./logs:/var/log
   web:
     build: build/nginx
@@ -17,7 +17,7 @@ services:
         - php
         - db
     volumes:
-        - ./symfony:/symfony
+        - ./symfony:/symfony:cached
         - ./logs:/var/log/nginx
   db:
     image: mysql/mysql-server:latest
