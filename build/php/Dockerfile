@@ -12,7 +12,9 @@ RUN apt-get update && apt-get install -my \
   php-cli \
   php-intl \
   git \
-  zip
+  zip \
+  php-apcu \
+  php-opcache
 
 RUN mkdir /run/php
 
