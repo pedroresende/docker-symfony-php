@@ -21,6 +21,7 @@ RUN apt-get update && apt-get install -my \
 
 RUN mkdir /run/php
 
+ADD conf/www.conf /etc/php/7.1/fpm/pool.d/www.conf
 ADD conf/memory.ini /etc/php/7.1/fpm/conf.d/memory.ini
 ADD conf/upload_max_filesize.ini /etc/php/7.1/fpm/conf.d/upload_max_filesize.ini
 ADD conf/opcache.ini /etc/php/7.1/mods-available/10-opcache.ini
