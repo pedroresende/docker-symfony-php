@@ -1,3 +1,4 @@
+
 FROM ubuntu:latest
 
 RUN export DEBIAN_FRONTEND=noninteractive &&  apt-get update && apt-get install -my \
@@ -11,6 +12,9 @@ RUN export DEBIAN_FRONTEND=noninteractive &&  apt-get update && apt-get install 
   php-xdebug \
   php-cli \
   php-intl \
+  php-bz2 \
+  php-zip \
+  php-mbstring \
   git \
   zip \
   php-apcu \
@@ -30,10 +34,9 @@ ADD conf/upload_max_filesize.ini /etc/php/7.2/fpm/conf.d/upload_max_filesize.ini
 RUN php -r "copy('http://getcomposer.org/installer', 'composer-setup.php');"
 RUN php composer-setup.php
 RUN php -r "unlink('composer-setup.php');"
+
 RUN mv composer.phar /usr/local/bin/composer
 RUN chmod +x /usr/local/bin/composer
-
-WORKDIR /symfony
 
 EXPOSE 9000
 
