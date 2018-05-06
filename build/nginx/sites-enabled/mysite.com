@@ -1,6 +1,6 @@
 server {
     server_name localhost;
-    root /symfony/web;
+    root /symfony/public;
 
     location / {
         # try to serve file directly, fallback to index.php
