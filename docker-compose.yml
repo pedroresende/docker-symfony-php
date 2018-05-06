@@ -20,7 +20,7 @@ services:
         - ./symfony:/symfony:cached
         - ./logs:/var/log/nginx
   db:
-    image: mysql/mysql-server:latest
+    image: mysql/mysql-server:5.7
     environment:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
