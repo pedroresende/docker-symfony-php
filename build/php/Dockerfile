@@ -1,41 +1,39 @@
-FROM ubuntu:latest
+FROM php:7.4.3-fpm-buster
 
-RUN export DEBIAN_FRONTEND=noninteractive &&  apt-get update && apt-get install -myq \
+LABEL maintainer="Pedro Resende <pedroresende@mail.resende.biz>"
+
+ENV TZ=Europe/Lisbon
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN apt-get update && apt-get install -my \
+  acl \
   curl \
-  wget \
-  php-curl \
-  php-fpm \
-  php-gd \
-  php-xsl \
-  php-mysqlnd \
-  php-xdebug \
-  php-cli \
-  php-intl \
-  php-bz2 \
-  php-zip \
-  php-mbstring \
   git \
-  zip \
-  php-apcu \
-  php-opcache \
-  --no-install-recommends
+  libcurl4-openssl-dev \
+  libfreetype6-dev \
+  libfuse-dev \
+  libjpeg62-turbo-dev \
+  libpng-dev \
+  libssl-dev \
+  libxml++2.6-dev \
+  libzip-dev \
+  rsync \
+  ssh \
+  wget \
+  zip
 
-RUN ln -fs /usr/share/zoneinfo/Europe/Lisbon /etc/localtime
-RUN dpkg-reconfigure --frontend noninteractive tzdata
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+  && docker-php-ext-install -j$(nproc) gd bcmath intl zip curl pdo_mysql mysqli
 
 RUN mkdir /run/php
 
-ADD conf/www.conf /etc/php/7.2/fpm/pool.d/www.conf
-ADD conf/php-fpm.conf /etc/php/7.2/fpm/php-fpm.conf
-ADD conf/memory.ini /etc/php/7.2/fpm/conf.d/memory.ini
-ADD conf/upload_max_filesize.ini /etc/php/7.2/fpm/conf.d/upload_max_filesize.ini
+ADD opcache.ini /usr/local/etc/php/conf.d/10-opcache.ini
 
-RUN php -r "copy('http://getcomposer.org/installer', 'composer-setup.php');" && \
-  php composer-setup.php && \
-  php -r "unlink('composer-setup.php');" && \
-  mv composer.phar /usr/local/bin/composer && \
-  chmod +x /usr/local/bin/composer
+RUN curl -sS https://getcomposer.org/installer | php \
+  && mv composer.phar /usr/local/bin/composer \
+  && chmod +x /usr/local/bin/composer
+
+WORKDIR /symfony
 
 EXPOSE 9000
 
-CMD ["php-fpm7.2"]
+CMD ["php-fpm"]
