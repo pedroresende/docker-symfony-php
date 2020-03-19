@@ -7,7 +7,7 @@ services:
     depends_on:
       - db
     volumes:
-      - ./symfony:/symfony:cached
+      - ./symfony:/symfony:delegated
       - ./logs:/var/log
   web:
     build: build/nginx
@@ -17,7 +17,7 @@ services:
         - php
         - db
     volumes:
-        - ./symfony:/symfony:cached
+        - ./symfony:/symfony:delegated
         - ./logs:/var/log/nginx
   db:
     image: mysql/mysql-server:5.7
@@ -28,4 +28,4 @@ services:
     ports:
       - "${DB_PORT}:3306"
     volumes:
-      - ./mysql:/var/lib/mysql
+      - ./mysql:/var/lib/mysql:delegated
