@@ -30,7 +30,9 @@ ADD opcache.ini /usr/local/etc/php/conf.d/10-opcache.ini
 
 RUN curl -sS https://getcomposer.org/installer | php \
   && mv composer.phar /usr/local/bin/composer \
-  && chmod +x /usr/local/bin/composer
+  && chmod +x /usr/local/bin/composer \
+  && wget https://get.symfony.com/cli/installer -O - | bash \
+  && cp /root/.symfony/bin/symfony /usr/local/bin/symfony
 
 WORKDIR /symfony
 
