@@ -24,6 +24,9 @@ RUN apt-get update && apt-get install -my \
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
   && docker-php-ext-install -j$(nproc) gd bcmath intl zip curl pdo_mysql mysqli
 
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+  && apt-get install -y nodejs
+
 RUN mkdir /run/php
 
 ADD opcache.ini /usr/local/etc/php/conf.d/10-opcache.ini
