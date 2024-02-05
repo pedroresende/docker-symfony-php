@@ -22,5 +22,5 @@ You can change the default variables values on .env file
 
 ```
 $ docker-compose exec php bash
-$ cd ../ && rm -rf symfony && symfony new symfony
+$ cd ../ && symfony new symfony
 ```
