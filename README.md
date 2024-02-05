@@ -3,10 +3,11 @@
 ```
 $ docker-compose up
 ```
+
 In order to access the database
 
 ```
-mysql -uroot -psymfony -P3307
+$ docker-compose exec db mariadb -u root -p symfony
 ```
 
 Open your browser

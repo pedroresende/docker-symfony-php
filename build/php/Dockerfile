@@ -1,4 +1,4 @@
-FROM php:7.4.3-fpm-buster
+FROM php:8.3-fpm
 
 LABEL maintainer="Pedro Resende <pedroresende@mail.resende.biz>"
 
@@ -28,11 +28,16 @@ RUN mkdir /run/php
 
 ADD opcache.ini /usr/local/etc/php/conf.d/10-opcache.ini
 
-RUN curl -sS https://getcomposer.org/installer | php \
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+  && php composer-setup.php \
+  && php -r "unlink('composer-setup.php');" \
   && mv composer.phar /usr/local/bin/composer \
   && chmod +x /usr/local/bin/composer \
   && wget https://get.symfony.com/cli/installer -O - | bash \
-  && cp /root/.symfony/bin/symfony /usr/local/bin/symfony
+  && mv /root/.symfony5/bin/symfony /usr/local/bin/symfony
+
+RUN git config --global user.email "you@example.com" \
+  && git config --global user.name "Your Name"
 
 WORKDIR /symfony
 
